@@ -4,7 +4,6 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.UUID;
 
-@SessionScope
 public class Product {
     private final String name;
     private final UUID id;

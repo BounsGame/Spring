@@ -2,7 +2,6 @@ package org.skypro.counter.model.basket;
 
 import org.springframework.web.context.annotation.SessionScope;
 
-@SessionScope
 public class BasketItem {
     private final Product product;
     private final int value;
