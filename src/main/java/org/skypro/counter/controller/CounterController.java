@@ -14,9 +14,16 @@ import java.util.UUID;
 @RequestMapping
 public class CounterController {
     private CounterService counterService;
+    private BasketService basketService;
+    private StorageService storageService;
+    private ProductBasket productBasket;
 
-    public CounterController(CounterService counterService) {
+    public CounterController(ProductBasket productBasket,StorageService storageService,
+                             CounterService counterService,BasketService basketService){
+        this.productBasket = productBasket;
+        this.storageService = storageService;
         this.counterService = counterService;
+        this.basketService = basketService;
     }
 
     @GetMapping("/")
@@ -38,13 +45,13 @@ public class CounterController {
 
     @GetMapping("/shop/basket/{id}")
     public String addProduct(@PathVariable("id") UUID id) {
-        BasketService.add(id);
+        basketService.add(id);
         return "Продукт успешно добавлен";
     }
 
     @GetMapping("/shop/basket")
     public UserBasket getUserBasket() {
-        return BasketService.getUserBasket();
+        return basketService.getUserBasket();
     }
 
     @GetMapping("/shop/AllProduct")
@@ -52,12 +59,12 @@ public class CounterController {
         Product pamelo = new Product(UUID.randomUUID(), "Pamelo", 300);
         Product nachos = new Product(UUID.randomUUID(), "Nachos", 150);
         Product iceCream = new Product(UUID.randomUUID(), "Obama", 70);
-        StorageService.add(pamelo);
-        StorageService.add(nachos);
-        StorageService.add(iceCream);
-        StorageService.listOfProduct();
-        ProductBasket.add(pamelo.getId());
-        ProductBasket.add(nachos.getId());
-        ProductBasket.add(iceCream.getId());
+        storageService.add(pamelo);
+        storageService.add(nachos);
+        storageService.add(iceCream);
+        storageService.listOfProduct();
+        productBasket.add(pamelo.getId());
+        productBasket.add(nachos.getId());
+        productBasket.add(iceCream.getId());
     }
 }

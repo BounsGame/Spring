@@ -4,6 +4,7 @@ import org.skypro.counter.model.basket.BasketItem;
 import org.skypro.counter.model.basket.Product;
 import org.skypro.counter.model.basket.ProductBasket;
 import org.skypro.counter.model.basket.UserBasket;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,22 +12,29 @@ import java.util.stream.Collectors;
 
 @Service
 public class BasketService {
-    private static final Map<UUID, Integer> productBasket = new HashMap<>();
+    private  Map<UUID, Integer> basketService = new HashMap<>();
+    private  ProductBasket productBasket;
+    private  StorageService storageService;
 
-    public static void add(UUID id) {
-        if (StorageService.getProductById(id).isEmpty()) {
+    public BasketService (StorageService storageService, ProductBasket productBasket1){
+        this.storageService = storageService;
+        this.productBasket = productBasket1;
+    }
+
+    public  void add(UUID id) {
+        if (storageService.getProductById(id).isEmpty()) {
             throw new IllegalArgumentException("такого продукта нет");
         }
 
-        productBasket.merge(id, 1, Integer::sum);
+        productBasket.add(id);
     }
 
-    public static UserBasket getUserBasket() {
-        return new UserBasket(ProductBasket.getAll()
+    public  UserBasket getUserBasket() {
+        return new UserBasket(productBasket.getAll()
                 .entrySet().stream().map(entry -> {
                     UUID productId = entry.getKey();
                     int quantity = entry.getValue();
-                    Product product = StorageService.getProduct(productId);
+                    Product product = storageService.getProduct(productId);
 
                     return new BasketItem(product, quantity);
                 }).collect(Collectors.toList()));

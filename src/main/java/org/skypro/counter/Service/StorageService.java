@@ -10,21 +10,21 @@ import java.util.UUID;
 
 @Service
 public class StorageService {
-    private static Map<UUID, Product> availableProducts = new HashMap<>();
+    private  Map<UUID, Product> availableProducts = new HashMap<>();
 
-    public static Optional<Product> getProductById(UUID id) {
+    public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(availableProducts.get(id));
     }
 
-    public static Product getProduct(UUID id) {
+    public Product getProduct(UUID id) {
         return availableProducts.get(id);
     }
 
-    public static void add(Product product) {
+    public void add(Product product) {
         availableProducts.put(product.getId(), product);
     }
 
-    public static void listOfProduct() {
+    public void listOfProduct() {
         System.out.println(availableProducts);
     }
 

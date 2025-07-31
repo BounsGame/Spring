@@ -4,8 +4,6 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
-
-@SessionScope
 public class UserBasket {
 
     private final List<BasketItem> userBasket;
