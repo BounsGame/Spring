@@ -11,13 +11,13 @@ import java.util.UUID;
 @Component
 @SessionScope
 public class ProductBasket {
-    private  final Map<UUID, Integer> product = new HashMap<>();
+    private final Map<UUID, Integer> product = new HashMap<>();
 
-    public  void add(UUID id) {
+    public void add(UUID id) {
         product.merge(id, 1, Integer::sum);
     }
 
-    public  Map<UUID, Integer> getAll() {
+    public Map<UUID, Integer> getAll() {
         return Collections.unmodifiableMap(product);
     }
 

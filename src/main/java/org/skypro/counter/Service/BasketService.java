@@ -1,5 +1,6 @@
 package org.skypro.counter.Service;
 
+import org.skypro.counter.exception.NoSuchProductException;
 import org.skypro.counter.model.basket.BasketItem;
 import org.skypro.counter.model.basket.Product;
 import org.skypro.counter.model.basket.ProductBasket;
@@ -12,24 +13,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class BasketService {
-    private  Map<UUID, Integer> basketService = new HashMap<>();
-    private  ProductBasket productBasket;
-    private  StorageService storageService;
+    private Map<UUID, Integer> basketService = new HashMap<>();
+    private ProductBasket productBasket;
+    private StorageService storageService;
 
-    public BasketService (StorageService storageService, ProductBasket productBasket1){
+    public BasketService(StorageService storageService, ProductBasket productBasket1) {
         this.storageService = storageService;
         this.productBasket = productBasket1;
     }
 
-    public  void add(UUID id) {
+    public void add(UUID id) {
         if (storageService.getProductById(id).isEmpty()) {
-            throw new IllegalArgumentException("такого продукта нет");
+            throw new NoSuchProductException();
         }
 
         productBasket.add(id);
     }
 
-    public  UserBasket getUserBasket() {
+    public UserBasket getUserBasket() {
         return new UserBasket(productBasket.getAll()
                 .entrySet().stream().map(entry -> {
                     UUID productId = entry.getKey();
