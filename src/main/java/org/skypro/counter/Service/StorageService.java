@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Service
 public class StorageService {
-    private  Map<UUID, Product> availableProducts = new HashMap<>();
+    private Map<UUID, Product> availableProducts = new HashMap<>();
 
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(availableProducts.get(id));
