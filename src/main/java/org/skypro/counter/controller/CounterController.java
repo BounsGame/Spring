@@ -18,8 +18,8 @@ public class CounterController {
     private StorageService storageService;
     private ProductBasket productBasket;
 
-    public CounterController(ProductBasket productBasket,StorageService storageService,
-                             CounterService counterService,BasketService basketService){
+    public CounterController(ProductBasket productBasket, StorageService storageService,
+                             CounterService counterService, BasketService basketService) {
         this.productBasket = productBasket;
         this.storageService = storageService;
         this.counterService = counterService;
@@ -59,6 +59,8 @@ public class CounterController {
         Product pamelo = new Product(UUID.randomUUID(), "Pamelo", 300);
         Product nachos = new Product(UUID.randomUUID(), "Nachos", 150);
         Product iceCream = new Product(UUID.randomUUID(), "Obama", 70);
+        Product melon = new Product(UUID.randomUUID(), " melon", 200);
+        System.out.println(melon.getId());
         storageService.add(pamelo);
         storageService.add(nachos);
         storageService.add(iceCream);
