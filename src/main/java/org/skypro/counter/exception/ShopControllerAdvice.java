@@ -10,7 +10,7 @@ public class ShopControllerAdvice {
 
     @ExceptionHandler(NoSuchProductException.class)
     public ResponseEntity<ShopError> handleNoSuchProductException(NoSuchProductException e) {
-        ShopError error = new ShopError();
+        ShopError error = new ShopError("404", "такого продукта не существует");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 

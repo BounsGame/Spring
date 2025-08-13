@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class BasketService {
-    private Map<UUID, Integer> basketService = new HashMap<>();
     private ProductBasket productBasket;
     private StorageService storageService;
 
@@ -23,7 +22,11 @@ public class BasketService {
     }
 
     public void add(UUID id) {
-        if (storageService.getProductById(id).isEmpty()) {
+        try {
+            if (storageService.getProductById(id).isEmpty()) {
+                throw new NoSuchProductException();
+            }
+        } catch (NullPointerException e) {
             throw new NoSuchProductException();
         }
 
@@ -31,6 +34,13 @@ public class BasketService {
     }
 
     public UserBasket getUserBasket() {
+        try {
+            if (productBasket.getAll().isEmpty()) {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException e) {
+            return null;
+        }
         return new UserBasket(productBasket.getAll()
                 .entrySet().stream().map(entry -> {
                     UUID productId = entry.getKey();
@@ -39,5 +49,9 @@ public class BasketService {
 
                     return new BasketItem(product, quantity);
                 }).collect(Collectors.toList()));
+    }
+
+    public ProductBasket getProductBasket() {
+        return productBasket;
     }
 }
