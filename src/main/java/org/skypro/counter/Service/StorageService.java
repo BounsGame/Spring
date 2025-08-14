@@ -28,4 +28,8 @@ public class StorageService {
         System.out.println(availableProducts);
     }
 
+    public Map<UUID, Product> getMap() {
+        return availableProducts;
+    }
+
 }
